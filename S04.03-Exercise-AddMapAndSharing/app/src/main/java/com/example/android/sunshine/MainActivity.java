@@ -221,8 +221,28 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapterOn
             return true;
         }
 
-        // TODO (2) Launch the map when the map menu item is clicked
+        // COMPLETED (2) Launch the map when the map menu item is clicked
+        if (id == R.id.action_show_map) {
+            String addressString = "1600 Ampitheatre Parkway, CA";
+            // geo:0,0?q=my+street+address
+            Uri uri = new Uri.Builder()
+                    .scheme("geo")
+                    .path("0,0")
+                    .appendQueryParameter("q", addressString)
+                    .build();
+            showMap(uri);
+
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showMap(Uri geoLocation) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(geoLocation);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 }
